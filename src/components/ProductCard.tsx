@@ -27,17 +27,17 @@ export default function ProductCard({ product }: { product: ProductType }) {
       <Link href={`/products/${product.id}`}>
         <div className="relative aspect-[2/3]">
           <Image
-            src={product.images[product.colors[0]]}
+            src={product.images[productTypes.color]}
             alt={product.name}
             fill
             className="object-cover hover:scale-105 transition-all duration-300"
           />
         </div>
       </Link>
-      <div className="flex flex-col gap-4 p-4">
+      <div className="flex flex-col gap-4 p-4 bg-gray-100 ">
         <h1 className="text-sm font-medium">{product.name}</h1>
         <p className="text-gray-500 text-base">{product.shortDescription}</p>
-        <div className="flex  gap-4 text-sm">
+        <div className="flex  gap-4 text-sm ">
           <div className="flex flex-col gap-1">
             <span className="text-gray-500">Size</span>
             <select
@@ -64,9 +64,21 @@ export default function ProductCard({ product }: { product: ProductType }) {
                   onClick={() =>
                     handleProductType({ type: "color", value: color })
                   }
-                  className="w-[14px] h-[14px] rounded-full"
-                  style={{ backgroundColor: color === 'white' ? 'gray' : color }}
-                ></div>
+                  className={`cursor-pointer rounded-full border-1  ${
+                    productTypes.color === color
+                      ? "border-gray-400"
+                      : "border-gray-200 "
+                  } rounded-full p-[1.2px]`}
+                >
+                  <div
+                    key={color}
+                    onClick={() =>
+                      handleProductType({ type: "color", value: color })
+                    }
+                    className="w-[14px] h-[14px] rounded-full"
+                    style={{ backgroundColor: color }}
+                  ></div>
+                </div>
               ))}
             </div>
           </div>

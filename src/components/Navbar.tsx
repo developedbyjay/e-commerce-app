@@ -1,11 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
-import {
-  BellAlertIcon,
-  HomeIcon,
-  ShoppingCartIcon,
-} from "@heroicons/react/24/outline";
+import { BellAlertIcon, HomeIcon } from "@heroicons/react/24/outline";
+import CartIcon from "./ShoppingCartIcon";
 
 export default function Navbar() {
   return (
@@ -28,7 +25,7 @@ export default function Navbar() {
           <HomeIcon className="h-5 w-5 text-gray-500" />
         </Link>
         <BellAlertIcon className="h-5 w-5 text-gray-500 " />
-        <ShoppingCartIcon className="h-5 w-5 text-gray-500" />
+        <CartIcon />
         <Link href="/login">Sign in</Link>
       </div>
     </nav>
