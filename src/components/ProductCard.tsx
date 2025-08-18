@@ -5,12 +5,16 @@ import Link from "next/link";
 import { ProductType } from "@/types";
 import { ShoppingCart } from "lucide-react";
 import { useState } from "react";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "react-toastify";
 
 export default function ProductCard({ product }: { product: ProductType }) {
   const [productTypes, setProductTypes] = useState({
     size: product.sizes[0],
     color: product.colors[0],
   });
+
+  const { addToCart } = useCartStore();
 
   function handleProductType({
     type,
@@ -20,6 +24,16 @@ export default function ProductCard({ product }: { product: ProductType }) {
     value: string;
   }) {
     setProductTypes((prev) => ({ ...prev, [type]: value }));
+  }
+
+  function handleAddToCart() {
+    addToCart({
+      ...product,
+      quantity: 1,
+      selectedSize: productTypes.size,
+      selectedColor: productTypes.color,
+    });
+    toast.success('product added to cart')
   }
 
   return (
@@ -85,7 +99,10 @@ export default function ProductCard({ product }: { product: ProductType }) {
         </div>
         <div className="flex items-center justify-between">
           <span className="font-medium">${product.price.toFixed(2)}</span>
-          <button className="ring-1 ring-gray-200 shadow-lg rounded-md px-2 py-1 text-sm cursor-pointer hover:text-white flex items-center hover:bg-black transition-all gap-2 ">
+          <button
+            onClick={handleAddToCart}
+            className="ring-1 ring-gray-200 shadow-lg rounded-md px-2 py-1 text-sm cursor-pointer hover:text-white flex items-center hover:bg-black transition-all gap-2 "
+          >
             <ShoppingCart className="w-4 h-4" />
             Add to Cart
           </button>

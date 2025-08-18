@@ -11,9 +11,14 @@ const Homepage = async ({
   const category = (await searchParams).category;
 
   return (
-    <div className="">
-      <div className="relative aspect-[3/1]">
-        <Image src="/featured.png" fill alt="featured product" />
+    <div className="w-full">
+      <div className="relative aspect-[3/1] mb-8">
+        <Image
+          src="/featured.png"
+          fill
+          alt="featured product"
+          className="object-cover"
+        />
       </div>
       <ProductList category={category} params="homepage" />
     </div>
