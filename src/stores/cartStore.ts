@@ -7,6 +7,12 @@ export const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
     (set) => ({
       cart: [],
       addToCart: (item) => set((state) => ({ cart: [...state.cart, item] })),
+      updateFromCart: (item) =>
+        set((state) => ({
+          cart: state.cart.map((cartItem) =>
+            cartItem.id === item.id ? { ...cartItem, ...item } : cartItem
+          ),
+        })),
       removeFromCart: (id) =>
         set((state) => ({ cart: state.cart.filter((item) => item.id !== id) })),
       clearCart: () => set({ cart: [] }),

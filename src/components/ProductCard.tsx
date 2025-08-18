@@ -14,7 +14,9 @@ export default function ProductCard({ product }: { product: ProductType }) {
     color: product.colors[0],
   });
 
-  const { addToCart } = useCartStore();
+  const { cart, addToCart } = useCartStore();
+
+  const alreadyInCart = cart.some((item) => item.id === product.id);
 
   function handleProductType({
     type,
@@ -33,7 +35,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
       selectedSize: productTypes.size,
       selectedColor: productTypes.color,
     });
-    toast.success('product added to cart')
+    toast.success("product added to cart");
   }
 
   return (
@@ -100,11 +102,16 @@ export default function ProductCard({ product }: { product: ProductType }) {
         <div className="flex items-center justify-between">
           <span className="font-medium">${product.price.toFixed(2)}</span>
           <button
+            disabled={alreadyInCart}
             onClick={handleAddToCart}
-            className="ring-1 ring-gray-200 shadow-lg rounded-md px-2 py-1 text-sm cursor-pointer hover:text-white flex items-center hover:bg-black transition-all gap-2 "
+            className={`${
+              alreadyInCart
+                ? "bg-gray-400 cursor-not-allowed text-gray-200"
+                : "cursor-pointer hover:text-white hover:bg-black transition-all  ring-1 ring-gray-200"
+            } shadow-lg rounded-md px-2 py-1 text-sm   flex items-center  gap-2 `}
           >
             <ShoppingCart className="w-4 h-4" />
-            Add to Cart
+            {alreadyInCart ? "Already in cart" : "Add to cart"}
           </button>
         </div>
       </div>

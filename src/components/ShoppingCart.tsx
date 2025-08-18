@@ -2,7 +2,15 @@ import Image from "next/image";
 import { Trash2 } from "lucide-react";
 import { CartItemType } from "@/types";
 
-export default function ProductList({ item }: { item: CartItemType }) {
+export default function ProductList({
+  item,
+  deleteItem,
+  updateItem,
+}: {
+  item: CartItemType;
+  deleteItem: (id: string | number) => void;
+  updateItem: (item: CartItemType) => void;
+}) {
   return (
     <div className="flex items-center justify-between" key={item.id}>
       <div className="flex gap-8">
@@ -25,9 +33,30 @@ export default function ProductList({ item }: { item: CartItemType }) {
           <p className="text-sm font-medium">${item.price}</p>
         </div>
       </div>
-      <button className="w-8 h-8 rounded-full hover:bg-red-200 transition-all duration-300  bg-red-100 text-red-400 flex items-center justify-center cursor-pointer">
-        <Trash2 className="w-4 h-4 " />
-      </button>
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex items-center gap-2 justify-between">
+          <button
+            onClick={() => updateItem({ ...item, quantity: item.quantity - 1 })}
+            disabled={item.quantity === 1}
+            className="bg-gray-100 text-gray-500 hover:bg-gray-200 transition-all duration-300 p-1 rounded-full w-6 h-6 flex items-center justify-center cursor-pointer"
+          >
+            -
+          </button>
+          <span className="text-sm font-medium">{item.quantity}</span>
+          <button
+            onClick={() => updateItem({ ...item, quantity: item.quantity + 1 })}
+            className="bg-gray-100 text-gray-500 hover:bg-gray-200 transition-all duration-300 p-1 rounded-full w-6 h-6 flex items-center justify-center cursor-pointer"
+          >
+            +
+          </button>
+        </div>
+        <button
+          onClick={() => deleteItem(item.id)}
+          className="w-8 h-8 rounded-full hover:bg-red-200 transition-all duration-300  bg-red-100 text-red-400 flex items-center justify-center cursor-pointer"
+        >
+          <Trash2 className="w-4 h-4 " />
+        </button>
+      </div>
     </div>
   );
 }

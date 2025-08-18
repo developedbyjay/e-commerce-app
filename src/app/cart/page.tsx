@@ -36,7 +36,7 @@ export default function CartPage() {
     ? parseInt(searchParams.get("step") as string)
     : 1;
 
-  const { cart, removeFromCart } = useCartStore();
+  const { cart,updateFromCart, removeFromCart } = useCartStore();
 
   return (
     <div className="flex flex-col gap-8 items-center mt-12 ">
@@ -74,7 +74,12 @@ export default function CartPage() {
           {activeStep === 1 && (
             <>
               {cart?.map((item) => (
-                <ProductList key={item.id} item={item} />
+                <ProductList
+                  deleteItem={removeFromCart}
+                  key={item.id}
+                  item={item}
+                  updateItem={updateFromCart}
+                />
               ))}
             </>
           )}
@@ -91,7 +96,7 @@ export default function CartPage() {
               <span className="text-gray-600">Subtotal</span>
               <span className="font-semibold">
                 $
-                {cartItems
+                {cart
                   .reduce((acc, item) => acc + item.price * item.quantity, 0)
                   .toFixed(2)}
               </span>
