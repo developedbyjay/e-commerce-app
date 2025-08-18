@@ -78,7 +78,7 @@ export default function CartPage() {
                   deleteItem={removeFromCart}
                   key={item.id}
                   item={item}
-                  updateItem={updateFromCart}
+                  // updateItem={updateFromCart}
                 />
               ))}
             </>

@@ -16,7 +16,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
 
   const { cart, addToCart } = useCartStore();
 
-  const alreadyInCart = cart.some((item) => item.id === product.id);
+  // const alreadyInCart = cart.some((item) => item.id === product.id);
 
   function handleProductType({
     type,
@@ -102,16 +102,13 @@ export default function ProductCard({ product }: { product: ProductType }) {
         <div className="flex items-center justify-between">
           <span className="font-medium">${product.price.toFixed(2)}</span>
           <button
-            disabled={alreadyInCart}
+            // disabled={alreadyInCart}
             onClick={handleAddToCart}
-            className={`${
-              alreadyInCart
-                ? "bg-gray-400 cursor-not-allowed text-gray-200"
-                : "cursor-pointer hover:text-white hover:bg-black transition-all  ring-1 ring-gray-200"
-            } shadow-lg rounded-md px-2 py-1 text-sm   flex items-center  gap-2 `}
+            className={`$cursor-pointer hover:text-white hover:bg-black transition-all  ring-1 ring-gray-200
+             shadow-lg rounded-md px-2 py-1 text-sm   flex items-center  gap-2 `}
           >
             <ShoppingCart className="w-4 h-4" />
-            {alreadyInCart ? "Already in cart" : "Add to cart"}
+            Add to cart
           </button>
         </div>
       </div>

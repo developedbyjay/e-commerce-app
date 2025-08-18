@@ -5,11 +5,11 @@ import { CartItemType } from "@/types";
 export default function ProductList({
   item,
   deleteItem,
-  updateItem,
+  // updateItem,
 }: {
   item: CartItemType;
   deleteItem: (id: string | number) => void;
-  updateItem: (item: CartItemType) => void;
+  // updateItem: (item: CartItemType) => void;
 }) {
   return (
     <div className="flex items-center justify-between" key={item.id}>
@@ -34,7 +34,7 @@ export default function ProductList({
         </div>
       </div>
       <div className="flex flex-col items-center gap-4">
-        <div className="flex items-center gap-2 justify-between">
+        {/* <div className="flex items-center gap-2 justify-between">
           <button
             onClick={() => updateItem({ ...item, quantity: item.quantity - 1 })}
             disabled={item.quantity === 1}
@@ -49,7 +49,7 @@ export default function ProductList({
           >
             +
           </button>
-        </div>
+        </div> */}
         <button
           onClick={() => deleteItem(item.id)}
           className="w-8 h-8 rounded-full hover:bg-red-200 transition-all duration-300  bg-red-100 text-red-400 flex items-center justify-center cursor-pointer"
