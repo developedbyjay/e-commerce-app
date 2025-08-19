@@ -5,10 +5,10 @@ import { CartItemType } from "@/types";
 export default function ProductList({
   item,
   deleteItem,
-  // updateItem,
-}: {
+}: // updateItem,
+{
   item: CartItemType;
-  deleteItem: (id: string | number) => void;
+  deleteItem: (item: CartItemType) => void;
   // updateItem: (item: CartItemType) => void;
 }) {
   return (
@@ -51,7 +51,7 @@ export default function ProductList({
           </button>
         </div> */}
         <button
-          onClick={() => deleteItem(item.id)}
+          onClick={() => deleteItem(item)}
           className="w-8 h-8 rounded-full hover:bg-red-200 transition-all duration-300  bg-red-100 text-red-400 flex items-center justify-center cursor-pointer"
         >
           <Trash2 className="w-4 h-4 " />

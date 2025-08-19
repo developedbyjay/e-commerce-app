@@ -36,7 +36,7 @@ export default function CartPage() {
     ? parseInt(searchParams.get("step") as string)
     : 1;
 
-  const { cart,updateFromCart, removeFromCart } = useCartStore();
+  const { cart, updateFromCart, removeFromCart } = useCartStore();
 
   return (
     <div className="flex flex-col gap-8 items-center mt-12 ">
@@ -76,7 +76,7 @@ export default function CartPage() {
               {cart?.map((item) => (
                 <ProductList
                   deleteItem={removeFromCart}
-                  key={item.id}
+                  key={item.id + item.selectedSize + item.selectedColor}
                   item={item}
                   // updateItem={updateFromCart}
                 />

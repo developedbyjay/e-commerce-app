@@ -6,15 +6,19 @@ export const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
   persist(
     (set) => ({
       cart: [],
+      hasHydrated: false,
       addToCart: (item) =>
         set((state) => {
           const existingIndex = state.cart.findIndex(
+            //  returns the index of the item if found
             (p) =>
               p.id === item.id &&
               p.selectedSize === item.selectedSize &&
               p.selectedColor === item.selectedColor
           );
           if (existingIndex !== -1) {
+            // Already existed
+            console.log(existingIndex);
             const updatedCart = [...state.cart];
             updatedCart[existingIndex].quantity += item.quantity || 1;
             return { cart: updatedCart };
@@ -37,13 +41,25 @@ export const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
             cartItem.id === item.id ? { ...cartItem, ...item } : cartItem
           ),
         })),
-      removeFromCart: (id) =>
-        set((state) => ({ cart: state.cart.filter((item) => item.id !== id) })),
+      removeFromCart: (product) =>
+        set((state) => ({
+          cart: state.cart.filter(
+            (item) =>
+              !(
+                item.id === product.id &&
+                item.selectedSize === product.selectedSize &&
+                item.selectedColor === product.selectedColor
+              )
+          ),
+        })),
       clearCart: () => set({ cart: [] }),
     }),
     {
       name: "cart",
       storage: createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        if (state) state.hasHydrated = true;
+      },
     }
   )
 );
