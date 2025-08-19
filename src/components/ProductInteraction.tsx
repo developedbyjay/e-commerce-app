@@ -1,9 +1,11 @@
 "use client";
 
+import { useCartStore } from "@/stores/cartStore";
 import { ProductType } from "@/types";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, PlusCircle, ShoppingCartIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function ProductInteraction({
   product,
@@ -18,7 +20,8 @@ export default function ProductInteraction({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCartStore();
 
   const handleTypeChange = (type: "size" | "color", value: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -28,10 +31,21 @@ export default function ProductInteraction({
 
   const handleQuantityChange = (type: string) => {
     setQuantity((prev: number) => {
-      if (type === "decrement" && prev > 0) return prev - 1;
+      if (type === "decrement" && prev > 1) return prev - 1;
       if (type === "increment") return prev + 1;
       return prev;
     });
+  };
+
+  const handleCart = () => {
+    addToCart({
+      ...product,
+      quantity,
+      selectedColor,
+      selectedSize,
+    });
+    toast.success('successfully added to cart')
+
   };
   return (
     <div className="flex flex-col gap-3 mt-5">
@@ -56,13 +70,15 @@ export default function ProductInteraction({
       </div>
       <div>
         <label className="text-sm text-gray-400"> Color</label>
-        <div className="flex gap-2 mt-1">
+        <div className="flex items-center gap-2 mt-1">
           {product.colors.map((color) => (
             <button
               key={color}
               style={{ background: color }}
               onClick={() => handleTypeChange("color", color)}
-              className="cursor-pointer flex border border-gray-400  font-medium items-center justify-center text-[10px]  w-4 h-4 p-3 "
+              className={`${
+                selectedColor === color ? "border-1 border-gray-700" : ""
+              } cursor-pointer flex  font-medium items-center justify-center text-[10px]  w-4 h-4 p-3 `}
             ></button>
           ))}
         </div>
@@ -85,6 +101,17 @@ export default function ProductInteraction({
           </button>
         </div>
       </div>
+      <button
+        onClick={handleCart}
+        className="flex text-sm font-medium bg-gray-800 text-white items-center gap-2 px-4 py-2 rounded-md shadow-lg justify-center cursor-pointer"
+      >
+        <PlusCircle className="w-4 h-4" />
+        Add to Cart
+      </button>
+      <button className="flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-md shadow-lg justify-center cursor-pointer">
+        <ShoppingCartIcon className="w-4 h-4" />
+        Buy this Item
+      </button>
     </div>
   );
 }

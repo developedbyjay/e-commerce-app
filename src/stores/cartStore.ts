@@ -17,8 +17,6 @@ export const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
               p.selectedColor === item.selectedColor
           );
           if (existingIndex !== -1) {
-            // Already existed
-            console.log(existingIndex);
             const updatedCart = [...state.cart];
             updatedCart[existingIndex].quantity += item.quantity || 1;
             return { cart: updatedCart };
@@ -28,19 +26,14 @@ export const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
               ...state.cart,
               {
                 ...item,
-                quantity: 1,
+                quantity: item.quantity || 1,
                 selectedSize: item.selectedSize,
                 selectedColor: item.selectedColor,
               },
             ],
           };
         }),
-      updateFromCart: (item) =>
-        set((state) => ({
-          cart: state.cart.map((cartItem) =>
-            cartItem.id === item.id ? { ...cartItem, ...item } : cartItem
-          ),
-        })),
+
       removeFromCart: (product) =>
         set((state) => ({
           cart: state.cart.filter(

@@ -1,6 +1,7 @@
 import ProductInteraction from "@/components/ProductInteraction";
 import { ProductType } from "@/types";
 import Image from "next/image";
+import { describe } from "node:test";
 
 const product: ProductType = {
   id: 1,
@@ -19,6 +20,17 @@ const product: ProductType = {
   },
 };
 
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { id: string };
+}) => {
+  return {
+    title: product.name,
+    describe: product.shortDescription,
+  };
+};
+
 export default async function ProductPage({
   params,
   searchParams,
@@ -32,7 +44,7 @@ export default async function ProductPage({
   const selectedColor = (color || product.colors[0]) as string;
 
   return (
-    <div className="mt-5 grid grid-cols-1 md:grid-cols-[20rem_1fr] items-start gap-8">
+    <div className=" mt-5 grid grid-cols-1 md:grid-cols-[20rem_1fr] items-start gap-8">
       <div className="relative aspect-[2/3]">
         <Image
           src={product.images[selectedColor]}
@@ -41,7 +53,7 @@ export default async function ProductPage({
           className="object-contain rounded-md"
         />
       </div>
-      <div className="flex flex-col p-2 bg-gray-50">
+      <div className="flex flex-col p-2 shadow-md rounded-lg">
         <div className="flex flex-col gap-3">
           <h1 className="text-2xl font-medium">{product.name}</h1>
           <p className="text-sm font-light text-gray-500">
