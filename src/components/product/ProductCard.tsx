@@ -12,18 +12,18 @@ export default function ProductCard({ product }: { product: ProductType }) {
   const [productTypes, setProductTypes] = useState({
     size: product.sizes[0],
     color: product.colors[0],
+    quantity: 1,
   });
 
-  const { cart, addToCart } = useCartStore();
+  const { addToCart } = useCartStore();
 
-  // const alreadyInCart = cart.some((item) => item.id === product.id);
 
   function handleProductType({
     type,
     value,
   }: {
-    type: "size" | "color";
-    value: string;
+    type: "size" | "color" | "quantity";
+    value: string | number;
   }) {
     setProductTypes((prev) => ({ ...prev, [type]: value }));
   }
@@ -31,7 +31,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
   function handleAddToCart() {
     addToCart({
       ...product,
-      quantity: 1,
+      quantity: productTypes.quantity,
       selectedSize: productTypes.size,
       selectedColor: productTypes.color,
     });
@@ -46,6 +46,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
             src={product.images[productTypes.color]}
             alt={product.name}
             fill
+            sizes="20"
             className="object-cover hover:scale-105 transition-all duration-300"
           />
         </div>
@@ -53,7 +54,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
       <div className="flex flex-col gap-4 p-4 bg-gray-100 ">
         <h1 className="text-sm font-medium">{product.name}</h1>
         <p className="text-gray-500 text-base">{product.shortDescription}</p>
-        <div className="flex  gap-4 text-sm ">
+        <div className="flex items-center gap-4 text-sm ">
           <div className="flex flex-col gap-1">
             <span className="text-gray-500">Size</span>
             <select
@@ -97,6 +98,19 @@ export default function ProductCard({ product }: { product: ProductType }) {
                 </div>
               ))}
             </div>
+          </div>
+          <div className="flex flex-col gap-1 items-center">
+            <span className="text-gray-500">Qty</span>
+            <input
+              type="number"
+              min="1"
+              max="99"
+              value={productTypes.quantity}
+              className="border border-gray-300 rounded-md px-2 py-[3px] w-16 text-center"
+              onChange={(e) =>
+                handleProductType({ type: "quantity", value: +e.target.value })
+              }
+            />
           </div>
         </div>
         <div className="flex items-center justify-between">

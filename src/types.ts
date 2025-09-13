@@ -43,12 +43,11 @@ export const paymentFormSchema = z.object({
 
 export type CartStoreStateType = {
   cart: CartItemType[];
-  hasHydrated: boolean;
+  hasHydrated?: boolean;
 };
 
 export type CartStoreActionsType = {
   addToCart: (product: CartItemType) => void;
-
   removeFromCart: (product: CartItemType) => void;
   clearCart: () => void;
 };

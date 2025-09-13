@@ -16,11 +16,14 @@ export const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
               p.selectedSize === item.selectedSize &&
               p.selectedColor === item.selectedColor
           );
+
+          // The item already exist in the cart
           if (existingIndex !== -1) {
             const updatedCart = [...state.cart];
             updatedCart[existingIndex].quantity += item.quantity || 1;
             return { cart: updatedCart };
           }
+          // The item never existed before(new item)
           return {
             cart: [
               ...state.cart,

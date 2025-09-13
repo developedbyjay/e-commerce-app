@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Footprints,
   Glasses,
@@ -10,7 +11,7 @@ import {
 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const categories = [
+const categories: { name: string; icon: React.ReactElement; slug: string }[] = [
   {
     name: "All",
     icon: <ShoppingBasket className="w-4 h-4" />,

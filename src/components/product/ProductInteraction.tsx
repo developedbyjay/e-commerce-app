@@ -3,6 +3,7 @@
 import { useCartStore } from "@/stores/cartStore";
 import { ProductType } from "@/types";
 import { Minus, Plus, PlusCircle, ShoppingCartIcon } from "lucide-react";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -24,7 +25,7 @@ export default function ProductInteraction({
   const { addToCart } = useCartStore();
 
   const handleTypeChange = (type: "size" | "color", value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams);
     params.set(type, value);
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
@@ -44,8 +45,7 @@ export default function ProductInteraction({
       selectedColor,
       selectedSize,
     });
-    toast.success('successfully added to cart')
-
+    toast.success("successfully added to cart");
   };
   return (
     <div className="flex flex-col gap-3 mt-5">
@@ -108,10 +108,10 @@ export default function ProductInteraction({
         <PlusCircle className="w-4 h-4" />
         Add to Cart
       </button>
-      <button className="flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-md shadow-lg justify-center cursor-pointer">
+      <Link href='/cart' className="flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-md shadow-lg justify-center cursor-pointer">
         <ShoppingCartIcon className="w-4 h-4" />
         Buy this Item
-      </button>
+      </Link>
     </div>
   );
 }

@@ -1,7 +1,7 @@
-import ProductInteraction from "@/components/ProductInteraction";
+import ProductInteraction from "@/components/product/ProductInteraction";
 import { ProductType } from "@/types";
 import Image from "next/image";
-import { describe } from "node:test";
+
 
 const product: ProductType = {
   id: 1,

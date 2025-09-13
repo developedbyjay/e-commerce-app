@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ProductCard from "./ProductCard";
-import Categories from "./Categories";
-import Filter from "./Filter";
+import Categories from "../Categories";
+import Filter from "../Filter";
 import { ProductsType } from "@/types";
 
 const products: ProductsType = [

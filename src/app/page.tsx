@@ -1,6 +1,5 @@
-import ProductList from "@/components/ProductList";
+import ProductList from "@/components/product/ProductList";
 import Image from "next/image";
-
 
 const Homepage = async ({
   searchParams,
@@ -9,7 +8,7 @@ const Homepage = async ({
     category: string;
   }>;
 }) => {
-  const category = (await searchParams).category;
+  const { category } = await searchParams;
 
   return (
     <div className="w-full">

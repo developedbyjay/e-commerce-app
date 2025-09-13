@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { ArrowRightIcon } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ShippingFormInputs } from "@/types";
@@ -37,6 +38,12 @@ export default function CartPage() {
     : 1;
 
   const { cart, removeFromCart } = useCartStore();
+
+  useEffect(() => {
+    if (cart.length === 0) {
+      router.replace("/");
+    }
+  }, [cart]);
 
   return (
     <div className="flex flex-col gap-8 items-center mt-12 ">
